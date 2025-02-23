@@ -13,7 +13,7 @@ def get_objects_from_image(image_data):
 
 # Function to generate story using Gemini API
 def generate_story(objects):
-    api_key = "YOUR_GEMINI_API_KEY"  # Replace with your Gemini API key
+    api_key = "AIzaSyCFA8FGd9mF42_4ExVYTqOsvOeCbyHzBFU"  # Replace with your Gemini API key
     url = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateText"
     headers = {"Content-Type": "application/json"}
     prompt = f"Write a short story including these objects: {', '.join(objects)}."
