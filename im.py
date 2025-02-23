@@ -1,3 +1,7 @@
+
+
+
+
 import streamlit as st
 import requests
 import base64
@@ -14,16 +18,21 @@ def get_objects_from_image(image_data):
 # Function to generate story using Gemini API
 def generate_story(objects):
     api_key = "AIzaSyCFA8FGd9mF42_4ExVYTqOsvOeCbyHzBFU"  # Replace with your Gemini API key
-    url = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateText"
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateText?key={api_key}"
     headers = {"Content-Type": "application/json"}
     prompt = f"Write a short story including these objects: {', '.join(objects)}."
     data = {"prompt": prompt, "max_tokens": 100}
     
     response = requests.post(url, headers=headers, json=data)
+    
     if response.status_code == 200:
-        return response.json().get("text", "No story generated.")
+        try:
+            response_data = response.json()
+            return response_data.get("choices", [{}])[0].get("text", "No story generated.")
+        except json.JSONDecodeError:
+            return "Error parsing response."
     else:
-        return "Error generating story."
+        return f"Error {response.status_code}: {response.text}"
 
 # Streamlit UI
 st.title("AI Story Generator from Images")
