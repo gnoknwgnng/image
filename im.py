@@ -3,7 +3,7 @@ import json
 import streamlit as st
 
 # Set up API details
-HUGGINGFACE_API_KEY = "YOUR_HUGGING_FACE_API_KEY"  # Replace with your Hugging Face API key
+HUGGINGFACE_API_KEY = "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"  # Replace with your Hugging Face API key
 MODEL = "mistralai/Mistral-7B-Instruct"  # You can change this to another model if needed
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL}"
 
