@@ -4,7 +4,7 @@ import streamlit as st
 
 # Set up API details
 HUGGINGFACE_API_KEY = "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"  # Replace with your Hugging Face API key
-MODEL = "mistralai/Mistral-7B-Instruct"  # You can change this to another model if needed
+MODEL = "meta-llama/Llama-2-7b-chat-hf"  # Changed to LLaMA 2
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL}"
 
 headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}
@@ -29,8 +29,12 @@ if uploaded_file:
     response = requests.post(API_URL, headers=headers, json={"inputs": story_prompt})
 
     if response.status_code == 200:
-        story = response.json()[0]['generated_text']
-        st.write("## Generated Story:")
-        st.write(story)
+        result = response.json()
+        if isinstance(result, list) and "generated_text" in result[0]:
+            story = result[0]["generated_text"]
+            st.write("## Generated Story:")
+            st.write(story)
+        else:
+            st.write("**Error:** Unexpected response format from the model.")
     else:
         st.write(f"**Error {response.status_code}:** {response.text}")
